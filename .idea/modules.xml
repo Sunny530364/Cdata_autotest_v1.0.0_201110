@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Cdata_part1.iml" filepath="$PROJECT_DIR$/.idea/Cdata_part1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../pyqt5_Mytools/.idea/pyqt5_Mytools.iml" filepath="$PROJECT_DIR$/../pyqt5_Mytools/.idea/pyqt5_Mytools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../untitled/.idea/untitled.iml" filepath="$PROJECT_DIR$/../untitled/.idea/untitled.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../wifitool/.idea/wifitool.iml" filepath="$PROJECT_DIR$/../wifitool/.idea/wifitool.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,217 @@
+#File: fd1616s.cfg
+#Saving user: root
+#Saving time: 2000-01-24 01:16:38+0000
+#Version: V1.0.4
+traffic-profile profile-id 1 profile-name "inbound_limit" cir 20480 pir 30960 cbs 2000 pbs 2000
+traffic-profile profile-id 2 profile-name "outbound_limit" cir 10240 pir 20480 cbs 2000 pbs 2000
+traffic-profile profile-id 200 profile-name "cdata" cir 20480 pir 40960 cbs 2000 pbs 2000
+dba-profile profile-id 0 profile-name "dba-profile_0"
+  #type1 fix 256
+  commit
+ exit
+!
+dba-profile profile-id 1 profile-name "dba-profile_1"
+  #type4 max 1024000
+  commit
+ exit
+!
+dba-profile profile-id 100 profile-name "dba-profile_100"
+  type4 max 1024000
+  commit
+ exit
+!
+ont-lineprofile gpon profile-id 0 profile-name "lineprofile_0"
+  #tcont 0 dba-profile-id 0
+  #tcont 1 dba-profile-id 1
+   #gem add 1 tcont 1
+    #gem mapping 1 1 vlan 1
+  commit
+ exit
+!
+ont-lineprofile gpon profile-id 200 profile-name "lineprofile_200"
+  #tcont 0 dba-profile-id 0
+  tcont 1 dba-profile-id 100
+   gem add 1 tcont 1 encrypt off
+    gem mapping 1 1 vlan transparent
+  commit
+ exit
+!
+ont-srvprofile gpon profile-id 0 profile-name "srvprofile_0"
+  #ont-port eth adaptive pots adaptive catv adaptive
+  port vlan eth 1 transparent
+  port vlan eth 2 transparent
+  port vlan eth 3 transparent
+  port vlan eth 4 transparent
+  commit
+ exit
+!
+ont-srvprofile gpon profile-id 200 profile-name "srvprofile_200"
+  ont-port eth adaptive pots adaptive catv adaptive
+  port vlan eth 1 transparent
+  port vlan eth 2 transparent
+  port vlan eth 3 transparent
+  port vlan eth 4 transparent
+  commit
+ exit
+!
+ont-igmpacl gpon acl-id 200 acl-name "igmpacl_200"
+  igmp rule add 1 3000 239.1.1.1 239.1.1.1
+  commit
+ exit
+!
+ont-igmpprofile gpon profile-id 200 profile-name "igmpprofile_200"
+  igmp control dynamic-acl 200
+  commit
+ exit
+!
+ont-typeprofile gpon profile-id 1 profile-name "1ETH"
+  ont-port eth 1
+  commit
+ exit
+!
+ont-typeprofile gpon profile-id 2 profile-name "4ETH"
+  ont-port eth 4
+  commit
+ exit
+!
+ont-typeprofile gpon profile-id 3 profile-name "4ETH_1TV"
+  ont-port eth 4 catv 1
+  commit
+ exit
+!
+ont-typeprofile gpon profile-id 4 profile-name "4ETH_1TV_2POTS"
+  ont-port eth 4 catv 1 pots 2
+  commit
+ exit
+!
+interface gpon 0/0
+  ont autofind 1 enable
+  ont autofind 2 enable
+  ont autofind 3 enable
+  ont autofind 4 enable
+  ont autofind 5 enable
+  ont autofind 6 enable
+  ont autofind 7 enable
+  ont autofind 8 enable
+  ont autofind 9 enable
+  ont autofind 10 enable
+  ont autofind 11 enable
+  ont autofind 12 enable
+  ont autofind 13 enable
+  ont autofind 14 enable
+  ont autofind 15 enable
+  ont autofind 16 enable
+  ont authmode 1 manual
+  ont authmode 2 manual
+  ont authmode 3 manual
+  ont authmode 4 manual
+  ont authmode 5 manual
+  ont authmode 6 manual
+  ont authmode 7 manual
+  ont authmode 8 manual
+  ont authmode 9 manual
+  ont authmode 10 manual
+  ont authmode 11 manual
+  ont authmode 12 manual
+  ont authmode 13 manual
+  ont authmode 14 manual
+  ont authmode 15 manual
+  ont authmode 16 manual
+  shutdown 16
+ exit
+!
+vlan 2000-2009,3000,4001
+interface ge 0/0
+ traffic-suppress 1 unknown-unicast disable
+ vlan mode 1 trunk
+ vlan native-vlan 1 2000
+ vlan trunk 1 1,2001-2009,3000
+ vlan access 2 4001
+ exit
+!
+interface gpon 0/0
+ traffic-suppress 16 unknown-unicast disable
+ exit
+!
+service-port autoconfig vlan 1 gpon 0/0 port 1 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 2 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 3 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 4 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 5 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 6 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 7 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 8 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 9 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 10 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 11 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 12 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 13 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 14 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 15 gemport 1 multi-service user-vlan 1 tag-action transparent
+service-port autoconfig vlan 1 gpon 0/0 port 16 gemport 1 multi-service user-vlan 1 tag-action transparent
+aaa
+ authentication-scheme default
+  exit
+ domain default
+  exit
+ exit
+!
+igmp mode proxy
+multicast-vlan 3000
+  igmp multicast-unknown policy discard
+  igmp router-port ge 0/0/1
+  igmp program add program-index 2 ip 239.2.2.2
+  igmp program add program-index 1 ip 239.1.1.1
+ exit
+!
+interface mgmt
+ ip address 192.168.0.141 255.255.255.0
+ exit
+!
+alarm output alarmid 100102 enable
+alarm output alarmid 100104 enable
+alarm output alarmid 100105 enable
+alarm output alarmid 100107 enable
+alarm output alarmid 100203 enable
+alarm output alarmid 100205 enable
+alarm output alarmid 100306 enable
+alarm output alarmid 100315 enable
+alarm output alarmid 100316 enable
+alarm output alarmid 100401 enable
+alarm output alarmid 1000001 enable
+alarm output alarmid 1000002 enable
+alarm output alarmid 1000004 enable
+alarm output alarmid 1000005 enable
+alarm output alarmid 1000006 enable
+alarm output alarmid 1000007 enable
+alarm output alarmid 1000008 enable
+alarm output alarmid 1000009 enable
+alarm output alarmid 1000010 enable
+alarm output alarmid 1000011 enable
+alarm output alarmid 1000012 enable
+alarm output alarmid 1000013 enable
+alarm output alarmid 1000014 enable
+alarm output alarmid 1000015 enable
+alarm output alarmid 1000016 enable
+alarm output alarmid 1000022 enable
+alarm output alarmid 1000024 enable
+alarm output alarmid 1000030 enable
+alarm output alarmid 1001001 enable
+event output eventid 110001 enable
+event output eventid 113001 enable
+event output eventid 113002 enable
+event output eventid 1100001 enable
+event output eventid 1100005 enable
+event output eventid 1100006 enable
+event output eventid 1100009 enable
+event output eventid 1100010 enable
+event output eventid 1100011 enable
+event output eventid 1100012 enable
+vty output global show-all
+autosave interval off
+autosave time off
+snmp-agent community read "puhcfl"
+snmp-agent community write "pxfydqe"
+snmp-agent enable
+!
+end

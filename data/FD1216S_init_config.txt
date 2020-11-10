@@ -1,0 +1,171 @@
+#File: pon.cfg.bak
+#Saving user: 
+#Saving time: 2000-01-01 00:04:23+0000
+#Version: V1.0.2
+vlan 2-1000
+!
+interface ge 0/0
+ vlan access 1 11
+ vlan access 2 22
+ vlan access 3 33
+ vlan access 4 44
+ vlan access 5 55
+ vlan access 6 66
+ vlan access 7 77
+ vlan access 8 88
+ exit
+!
+interface xge 0/0
+ vlan access 1 100
+ vlan access 2 300
+ shutdown 3
+ flow-control 3 disable
+ port-name 3
+ port-rate 3 egress 28
+ port-rate 3 ingress 28
+ shutdown 4
+ flow-control 4 disable
+ port-name 4
+ port-rate 4 egress 29
+ port-rate 4 ingress 29
+ exit
+!
+interface epon 0/0
+ vlan access 1 11
+ vlan access 2 22
+ vlan access 3 33
+ vlan access 4 44
+ vlan access 5 55
+ vlan access 6 66
+ vlan access 7 77
+ vlan access 8 88
+ exit
+!
+end
+#File: pon.cfg
+#Saving user: root
+#Saving time: 2000-01-05 14:15:48+0000
+#Version: V1.0.6
+vlan-pool add 1 start-vid 2000 end-vid 2007 no-reused
+dba-profile profile-id 1 profile-name dba-profile_1
+  type4 max 1000000
+  commit
+ exit
+!
+dba-profile profile-id 100 profile-name dba-profile_100
+  type4 max 1000000
+  commit
+ exit
+!
+ont-lineprofile epon profile-id 200 profile-name lineprofile_200
+  dba-threshold 1 q1 0
+  llid 1 dba-profile-id 100
+  commit
+ exit
+!
+ont-srvprofile epon profile-id 0 profile-name srvprofile_0
+  ont-port eth adaptive pots adaptive catv adaptive
+  commit
+ exit
+!
+ont-srvprofile epon profile-id 200 profile-name srvprofile_200
+  ont-port eth adaptive pots adaptive catv adaptive
+  commit
+ exit
+!
+interface epon 0/0
+  ont authmode 1 adaptive
+  ont authmode 2 adaptive
+  ont authmode 3 adaptive
+  ont authmode 4 adaptive
+  shutdown 5
+  ont authmode 5 adaptive
+  ont authmode 6 adaptive
+  ont authmode 7 adaptive
+  ont authmode 8 adaptive
+  ont authmode 9 adaptive
+  ont authmode 10 adaptive
+  ont authmode 11 adaptive
+  ont authmode 12 adaptive
+  ont authmode 13 adaptive
+  ont authmode 14 adaptive
+  ont authmode 15 adaptive
+  ont authmode 16 adaptive
+ exit
+!
+vlan 100,2000-2009,3000,4001
+interface ge 0/0
+ vlan mode 5 trunk
+ vlan native-vlan 5 2000
+ vlan trunk 5 1,2001-2009,3000
+ vlan access 6 4001
+ exit
+!
+interface epon 0/0
+ vlan mode 3 trunk
+ vlan trunk 3 2000,4001
+ vlan mode 5 trunk
+ vlan trunk 5 2000-2009,3000,4001
+ exit
+!
+igmp mode snooping
+multicast-vlan 3000
+  igmp multicast-unknown policy discard
+  igmp router-port ge 0/0/5
+  igmp program add program-index 1 ip 239.1.1.1
+ exit
+!
+btv
+ exit
+!
+aaa
+ authentication-scheme default
+  exit
+ domain default
+  exit
+ exit
+!
+interface mgmt
+ ip address 192.168.0.140 255.255.255.0
+ exit
+!
+alarm output alarmid 101 enable
+alarm output alarmid 102 enable
+alarm output alarmid 104 enable
+alarm output alarmid 105 enable
+alarm output alarmid 107 enable
+alarm output alarmid 201 enable
+alarm output alarmid 203 enable
+alarm output alarmid 204 enable
+alarm output alarmid 205 enable
+alarm output alarmid 206 enable
+alarm output alarmid 301 enable
+alarm output alarmid 302 enable
+alarm output alarmid 303 enable
+alarm output alarmid 304 enable
+alarm output alarmid 305 enable
+alarm output alarmid 306 enable
+alarm output alarmid 307 enable
+alarm output alarmid 308 enable
+alarm output alarmid 310 enable
+alarm output alarmid 315 enable
+alarm output alarmid 316 enable
+alarm output alarmid 317 enable
+alarm output alarmid 318 enable
+alarm output alarmid 319 enable
+alarm output alarmid 320 enable
+alarm output alarmid 321 enable
+alarm output alarmid 401 enable
+alarm output alarmid 402 enable
+alarm output alarmid 403 enable
+alarm output alarmid 131082 enable
+alarm output alarmid 131083 enable
+event output all enable
+vty output global show-all
+autosave interval off
+autosave time off
+snmp-agent community read "puhcfl"
+snmp-agent community write "pxfydqe"
+snmp-agent enable
+!
+end
